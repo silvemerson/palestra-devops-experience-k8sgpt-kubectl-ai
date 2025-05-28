@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-example
+spec:
+  replicas: 3
+  serviceName: "statefulset-service"
+  selector:
+    matchLabels:
+      app: statefulset-app
+  template:
+    metadata:
+      labels:
+        app: statefulset-app
+    spec:
+      containers:
+        - name: app-container
+          image: nginx
+          ports:
+            - containerPort: 80
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 0Gi  # Tamanho de armazenamento inválido
+

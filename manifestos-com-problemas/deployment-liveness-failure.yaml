@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveness-deployment
+spec:
+  replicas: 3  # Podemos definir um número inválido ou menor que o esperado
+  selector:
+    matchLabels:
+      app: liveness-test
+  template:
+    metadata:
+      labels:
+        app: liveness-test
+    spec:
+      containers:
+        - name: app-container
+          image: nginx
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthz  # Supondo que o /healthz não esteja configurado no nginx
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+

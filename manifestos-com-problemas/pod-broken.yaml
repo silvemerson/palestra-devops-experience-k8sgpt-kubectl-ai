@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-pod
+spec:
+  containers:
+    - name: test
+      image: thisimagedoesnotexist:latest  # Imagem inexistente
+      ports:
+        - containerPort: 80
+  tolerations: []  # Nenhuma tolerância adicionada
+  nodeSelector:
+    dedicated: "gpu"  # Supõe-se que não exista nó com essa label
+

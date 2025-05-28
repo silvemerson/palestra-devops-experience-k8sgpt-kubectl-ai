@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: broken-service
+spec:
+  type: LoadBalancer  # Pode gerar problema se o cluster não suporta
+  selector:
+    app: wrong-label   # Não corresponde ao Deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080  # Não existe no container
